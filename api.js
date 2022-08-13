@@ -2,11 +2,11 @@
 (async function main() {
   let api = await fetch("https://kay-software.ru/neuro/generated/seed.api.txt");
     try {
-        let page_dom = "нейро" + "." + "cf";
+        /* let page_dom = "нейро" + "." + "cf";
         if (document.domain !== page_dom) {
-            alert(document.URL + ":0x01\n\nТест \"module-verify\" провален.");
+            alert(document.URL + " :: 0x01\n\nТест \"module-verify\" провален.");
             location = "/";
-        }
+        } */
         function PsRand(a, b) {return a + Math.floor(Math.random() * b);}
         function Public(text) {
             let El = document.getElementById("result");
