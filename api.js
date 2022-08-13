@@ -2,6 +2,7 @@
 (async function main() {
   let api_request = await fetch("https://kay-software.ru/neuro/generated/seed.api.txt");
   let api = await api_request.text();
+  let api_arr = api.split("|");
      // try {
         /* let page_dom = "нейро" + "." + "cf";
         if (document.domain !== page_dom) {
@@ -14,7 +15,7 @@
             El.innerHTML = text;
             return true;
         }
-        await fetch("https://kay-software.ru/neuro/generated/seed." + PsRand(api[2], api[3]) + ".txt").then(response => response.text()).then(code => Public(code));
+        await fetch("https://kay-software.ru/neuro/generated/seed." + PsRand(api_arr[2], api_arr[3]) + ".txt").then(response => response.text()).then(code => Public(code));
      /* } catch(e) {
         Public("Ваш браузер не поддерживает используемые стандарты страницы :(");
     } */
