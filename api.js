@@ -9,7 +9,7 @@
             alert(document.URL + " :: 0x01\n\nТест \"module-verify\" провален.");
             location = "/";
         } */
-        function PsRand(a, b) {return a + Math.floor(Math.random() * b);}
+        function PsRand(a, b) {return Number(a) + Number(Math.floor(Math.random() * b));}
         function Public(text) {
             let El = document.getElementById("result");
             El.innerHTML = text;
