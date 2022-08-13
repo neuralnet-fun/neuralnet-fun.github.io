@@ -14,7 +14,7 @@
             El.innerHTML = text;
             return true;
         }
-        await fetch("https://kay-software.ru/neuro/generated/seed." + PsRand(api[2], api.text().split("|")[3]) + ".txt").then(response => response.text()).then(code => Public(code));
+        await fetch("https://kay-software.ru/neuro/generated/seed." + PsRand(api[2], api[3]) + ".txt").then(response => response.text()).then(code => Public(code));
      /* } catch(e) {
         Public("Ваш браузер не поддерживает используемые стандарты страницы :(");
     } */
