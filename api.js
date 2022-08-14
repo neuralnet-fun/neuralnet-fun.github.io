@@ -5,8 +5,6 @@
 
 const RemoteHost = ["https://kay-software.ru/neuro/"];
 
-const LogsDate = new Date();
-
 let counter = 0;
 
 (function OnLoad() {
@@ -15,6 +13,7 @@ let counter = 0;
 })();
 
 function FixTheTime(OperationName) {
+    LogsDate = new Date();
     console.log(`\"${OperationName}\":\"${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\"`);
 }
 function Public(ClientResponse) {
