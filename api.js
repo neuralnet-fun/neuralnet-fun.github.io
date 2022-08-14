@@ -17,7 +17,12 @@ let counter = 0;
 function FixTheTime(OperationName) {
     console.log(`\"${OperationName}\":\"${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\"`);
 }
-
+function Public(ClientResponse) {
+    let El = document.getElementById("de-generator-result");
+    if (El) {El.innerHTML = ClientResponse;}
+    if (!ClientResponse.includes("span")) { console.log(`\"response\":\"${ClientResponse}\"`); }
+    return true;
+}
 async function Generate() {
     try {
         counter++; console.log(`\"count\":\"${counter}\"`);
@@ -25,12 +30,6 @@ async function Generate() {
         let CopyButton = document.getElementById("copy");
         if (CopyButton) {
             CopyButton.innerHTML = "Копировать";
-        }
-        function Public(ClientResponse) {
-                let El = document.getElementById("de-generator-result");
-                if (El) {El.innerHTML = ClientResponse;}
-                if (!ClientResponse.includes("span")) { console.log(`\"response\":\"${ClientResponse}\"`); }
-            return true;
         }
         Public("<span style=\"color: green;\">Запрос к API...</span>");
         function GetDatabaseValue(section) {
@@ -50,7 +49,8 @@ async function Generate() {
         let seed = PsRand(api_arr[2], api_arr[3]);
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code));
     } catch (e) {
-        Public(`<span style=\"color: red;\"><pre>${e}</pre></span>`);
+        Public(`<span style=\"color: red;\"><pre>Exception occurred:
+    ${e}</pre></span>`);
         return false;
     }
     FixTheTime(`end_task:${counter}`);
