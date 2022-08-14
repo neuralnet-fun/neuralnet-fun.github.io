@@ -13,7 +13,7 @@ let counter = 0;
 })();
 
 function FixTheTime(OperationName) {
-    LogsDate = new Date();
+    let LogsDate = new Date();
     console.log(`\"${OperationName}\":\"${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\"`);
 }
 function Public(ClientResponse) {
