@@ -11,7 +11,7 @@ const RemoteHost = ["https://kay-software.ru/neuro/"];
 })();
 
 async function Generate() {
-    let CopyButton = document.getElementById("copy")
+    let CopyButton = document.getElementById("copy");
     if (CopyButton) {
         CopyButton.innerHTML = "Копировать";
     }
@@ -39,6 +39,7 @@ async function Generate() {
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code));
     } catch (e) {
         Public("Ваш браузер не поддерживает используемые стандарты страницы :(");
+        return false;
     }
     return true;
 };
