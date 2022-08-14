@@ -19,6 +19,53 @@ body {
     background: black;
     color: white;
 }
+.button {
+    margin: 5px;
+    display: inline-block;
+    font-size: 15px;
+    text-shadow: none;
+    padding: 5px 17px;
+    color: #313131;
+    background: #002e2e;
+    transition: 0.2s linear;
+    border: 1px solid grey;
+    color: white;
+    text-decoration: none;
+}
+.button:hover {
+    border: 1px solid black;
+    background: white;
+    color: black;
+}
+.button-copy {
+    transition: 0.2s linear;
+    margin: 5px;
+    display: inline-block;
+    font-size: 15px;
+    text-shadow: none;
+    padding: 5px 17px;
+    border: 1px solid black;
+    background: white;
+    color: black;
+}
+.button-copy:hover {
+    color: #313131;
+    background: #002e2e;
+    border: 1px solid grey;
+    color: white;
+    text-decoration: none;
+}
+.mobile-link {
+    display: none;
+}
+@media print, screen and (max-width: 520px) {
+    .mobile-link {
+        display: block;
+    }
+    .mobile-center {
+        text-align: center;
+    }
+}
 </style>
 </head>
 <body>
@@ -27,15 +74,22 @@ body {
 history.pushState(null, null, "/?push=0");
 document.title = "[De]generator (WEB)";
 </script>
+<div class="mobile-center">
+<h2>[Де]генератор</h2>
+<button onclick="Generate();" class="button">Ещё!</button>
+<button id="copy" onclick="navigator.clipboard.writeText(document.getElementById('de-generator-result').textContent);document.getElementById('copy').innerHTML = 'Скопировано!';" class="button-copy">Копировать</button>
+<br class="mobile-link">
+<a target="_blank" href="https://t.me/neuralnet_news" style="font-size: 13px; text-decoration: underline; color: grey; margin-top: 300px;">Всё о [Де]генераторе у нас в Telegram!</a>
+</div>
+<hr>
+<br>
 <div style="max-width: 550px;">
 <text id="de-generator-result">
-<span style="color: green;">Запрос к API... </span>
+<span style="color: green;">Запрок к API... </span>
 <noscript>
 <span style="color: red;">JavaScript не поддерживается</span>
 </noscript>
 </text>
 </div>
-<br>
-<a target="_blank" href="https://t.me/neuralnet_news" style="font-size: 13px; text-decoration: underline; color: grey; margin-top: 300px;">Всё о [Де]генераторе у нас в Telegram!</a>
 </body>
 </html>
