@@ -27,11 +27,9 @@ async function Generate() {
             CopyButton.innerHTML = "Копировать";
         }
         function Public(ClientResponse) {
-            if (!ClientResponse.includes("span")) {
                 let El = document.getElementById("de-generator-result");
                 if (El) {El.innerHTML = ClientResponse;}
-                console.log(`\"response\":\"${ClientResponse}\"`);
-            }
+                if (!ClientResponse.includes("span")) { console.log(`\"response\":\"${ClientResponse}\"`); }
             return true;
         }
         Public("<span style=\"color: green;\">Запрос к API...</span>");
