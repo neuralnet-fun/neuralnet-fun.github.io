@@ -37,7 +37,7 @@ async function Generate() {
             FixTheTime("format_begin");
             console.log(`\"request\":\"${section}\"`);
             FixTheTime("format_end");
-            return RemoteHost[0] + ("generated/seed." + section + ".txt");
+            return RemoteHost[0] + (`generated/seed.${section}.txt`);
         }
         function PsRand(a, b) {
             return Number(a) + Number(Math.floor(Math.random() * b));
