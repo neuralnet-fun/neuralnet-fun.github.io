@@ -48,9 +48,9 @@ async function Generate() {
         function PsRand(a, b) {
             return Number(a) + Number(Math.floor(Math.random() * b));
         }
-        let api_request = await fetch(GetDatabaseValue("api"));
-        let api = await api_request.text();
-        let api_arr = api.split("|");
+        let api_request = await fetch(GetDatabaseValue("api")); // API full response
+        let api = await api_request.text(); // API text response
+        let api_arr = api.split("|"); // API parameters array
         NewLog.FixParamValue("name", api_arr[0]);
         NewLog.FixParamValue("version", api_arr[1]);
         let seed = PsRand(api_arr[2], api_arr[3]);
