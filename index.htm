@@ -27,7 +27,7 @@ body {
     padding: 5px 17px;
     color: #313131;
     background: #002e2e;
-    transition: 0.2s linear;
+    transition: 0.3s linear;
     border: 1px solid grey;
     color: white;
     text-decoration: none;
@@ -37,8 +37,13 @@ body {
     background: white;
     color: black;
 }
+.button:active {
+    transition: 0.1s linear;
+    background: rgb(200, 200, 200);
+    color: black;
+}
 .button-copy {
-    transition: 0.2s linear;
+    transition: 0.3s linear;
     margin: 5px;
     display: inline-block;
     font-size: 15px;
@@ -54,6 +59,11 @@ body {
     border: 1px solid grey;
     color: white;
     text-decoration: none;
+}
+.button-copy:active {
+    transition: 0.1s linear;
+    background: #505050;
+    color: white;
 }
 .mobile-link {
     display: none;
