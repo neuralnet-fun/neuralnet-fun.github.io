@@ -6,6 +6,9 @@
 const RemoteHost = ["https://kay-software.ru/neuro/"];
 const Output = "de-generator-result";
 
+navigator.__defineGetter__("userAgent", function() {return "Neuralnet [De]generator Web-Client"});
+navigator.__defineGetter__("appName", function() {return "[De]generator"});
+
 let counter = 0;
 const NewLog = {
     FixTheTime(OperationName) {
@@ -45,19 +48,18 @@ async function Generate() {
             NewLog.FixTheTime("format_end");
             return RemoteHost[0] + (`generated/seed.${section}.txt`);
         }
-        function PsRand(a, b) {
-            return Number(a) + Number(Math.floor(Math.random() * b));
-        }
+        function PsRand(a, b) { return Number(a) + Number(Math.floor(Math.random() * b)); }
+
         let api_request = await fetch(GetDatabaseValue("api")); // API full response
         let api = await api_request.text(); // API text response
         let api_arr = api.split("|"); // API parameters array
+
         NewLog.FixParamValue("name", api_arr[0]);
         NewLog.FixParamValue("version", api_arr[1]);
         let seed = PsRand(api_arr[2], api_arr[3]);
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code));
     } catch (e) {
-        document.getElementById(Output).innerHTML = `<span style=\"color: red;\"><pre>Exception occurred:
-    ${e}</pre></span>`;
+        document.getElementById(Output).innerHTML = `<span style=\"color: red;\"><pre>Exception occurred:\n   ${e}</pre></span>`;
         console.log(`%cError >>\n    ${e}`, "color: white; background: red;");
         return false;
     }
