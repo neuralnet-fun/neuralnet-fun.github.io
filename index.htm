@@ -16,6 +16,8 @@ body {
     font-family: Calibri;
     font-size: 21px;
     cursor: default;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 ::selection {
     background: black;
@@ -70,18 +72,23 @@ body {
 .mobile-link {
     display: none;
 }
-@media print, screen and (max-width: 520px) {
+
+
+@media print, screen and (max-width: 600px) {
     .mobile-link {
         display: block;
     }
     .mobile-center {
         text-align: center;
     }
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
 }
 </style>
 </head>
 <body>
-<script type="text/javascript" id="seed-requester" src="api.js"></script>
 <script type="text/javascript">
 try {history.pushState(null, null, "/");} catch(e) {}
 document.title = "[Де]генератор (WEB)";
@@ -97,11 +104,11 @@ document.title = "[Де]генератор (WEB)";
 <br>
 <div style="max-width: 550px;">
 <text id="de-generator-result">
-<span style="color: green;">Запрок к API... </span>
 <noscript>
-<span style="color: red;">JavaScript не поддерживается</span>
+<pre><span style="color: red;">The web app requires JavaScript V8 (<i>10.4.16.7</i>)</span></pre>
 </noscript>
 </text>
 </div>
+<script type="text/javascript" id="seed-requester" src="api.js"></script>
 </body>
 </html>

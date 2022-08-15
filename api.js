@@ -59,7 +59,7 @@ async function Generate() {
         let seed = PsRand(api_arr[2], api_arr[3]);
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code));
     } catch (e) {
-        document.getElementById(Output).innerHTML = `<span style=\"color: red;\"><pre>Exception occurred:\n   ${e}</pre></span>`;
+        document.getElementById(Output).innerHTML = `<pre><span style=\"color: red;\">Exception occurred:\n   ${e}</span></pre>`;
         console.log(`%cError >>\n    ${e}`, "color: white; background: red;");
         return false;
     }
