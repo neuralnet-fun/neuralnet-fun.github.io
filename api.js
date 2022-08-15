@@ -8,13 +8,15 @@ const RemoteHost = ["https://kay-software.ru/neuro/"];
 let counter = 0;
 
 (function OnLoad() {
+    console.log("%c(C) Kay Software\nCoded by @DosX_Plus (Telegram)", "color: yellow;");
     FixTheTime("begin");
     Generate();
 })();
 
 function FixTheTime(OperationName) {
     let LogsDate = new Date();
-    console.log(`\"${OperationName}\":\"${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\"`);
+    console.log(`\"%c${OperationName}%c:%c${counter}\%c":\"%c${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\%c"`,
+    "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
 }
 function Public(ClientResponse) {
     let El = document.getElementById("de-generator-result");
@@ -25,7 +27,7 @@ function Public(ClientResponse) {
 async function Generate() {
     try {
         counter++; console.log(`\"count\":\"${counter}\"`);
-        FixTheTime(`begin_task:${counter}`);
+        FixTheTime(`begin_task`);
         let CopyButton = document.getElementById("copy");
         if (CopyButton) {
             CopyButton.innerHTML = "Копировать";
@@ -43,7 +45,7 @@ async function Generate() {
         let api_request = await fetch(GetDatabaseValue("api"));
         let api = await api_request.text();
         let api_arr = api.split("|");
-        console.log(`\"name\":\"${api_arr[0]}\"`);
+        console.log(`\"%cname%c:%c${counter}%c\":\"%c${api_arr[0]}%c\"`, "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
         console.log(`\"version\":\"${api_arr[1]}\"`);
         let seed = PsRand(api_arr[2], api_arr[3]);
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code));
@@ -52,7 +54,7 @@ async function Generate() {
     ${e}</pre></span>`);
         return false;
     }
-    FixTheTime(`end_task:${counter}`);
+    FixTheTime(`end_task`);
     console.log(`---`);
     return true;
 };
