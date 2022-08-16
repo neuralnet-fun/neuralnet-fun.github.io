@@ -87,6 +87,32 @@
         .mobile-link {
             display: none;
         }
+        /*.tg-url {
+            margin: 5px;
+            font-size: 13px;
+            color: grey;
+        }*/
+        
+        a {
+            position: relative;
+            color: #484848;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        
+        a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 1.5px;
+            background-color: red;
+        }
+        
+        a:hover:before {
+            color: white;
+        }
         
         @media print,
         screen and (max-width: 720px) {
@@ -116,7 +142,7 @@
         <button onclick="Generate();" class="button">Ещё!</button>
         <button id="copy" onclick="CopyResult();" class="button-copy">Копировать</button>
         <br class="mobile-link">
-        <a target="_blank" href="https://t.me/neuralnet_news" style="font-size: 13px; text-decoration: underline; color: grey; margin-top: 300px;">Всё о [Де]генераторе у нас в Telegram!</a>
+        <a target="_blank" href="https://t.me/neuralnet_news" class="tg-url">Всё о [Де]генераторе у нас в Telegram!</a>
     </div>
     <hr>
     <div style="max-width: 550px; margin-top: 30px;">
