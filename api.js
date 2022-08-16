@@ -6,19 +6,19 @@
 const RemoteHost = ["https://kay-software.ru/neuro/"];
 const Output = "de-generator-result";
 
-navigator.__defineGetter__("userAgent", function() {return "Neuralnet [De]generator Web-Client"});
-navigator.__defineGetter__("appName", function() {return "[De]generator"});
+navigator.__defineGetter__("userAgent", function() { return "Neuralnet [De]generator Web-Client" });
+navigator.__defineGetter__("appName", function() { return "[De]generator" });
 
 let counter = 0;
 const NewLog = {
     FixTheTime(OperationName) {
         let LogsDate = new Date();
         console.log(`  \"%c${OperationName}%c:%c${counter}\%c":\"%c${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\%c"`,
-        "color: gray;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
+            "color: gray;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
     },
     FixParamValue(OperationName, OperationValue) {
         console.log(`\"%c${OperationName}%c:%c${counter}\%c":\"%c${OperationValue}%c"`,
-        "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: lightgray;", "color: white;");
+            "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: lightgray;", "color: white;");
     }
 };
 
@@ -27,27 +27,31 @@ const NewLog = {
     NewLog.FixTheTime("begin");
     Generate();
 })();
+
 function Public(ClientResponse) {
     let El = document.getElementById(Output);
-    if (El) {El.innerHTML = ClientResponse;}
+    if (El) { El.innerHTML = ClientResponse; }
     if (!ClientResponse.includes("span")) { NewLog.FixParamValue("response", ClientResponse) }
     return true;
 }
 async function Generate() {
     try {
-        counter++; NewLog.FixParamValue("count", counter);
+        counter++;
+        NewLog.FixParamValue("count", counter);
         NewLog.FixTheTime(`begin_task`);
         let CopyButton = document.getElementById("copy");
         if (CopyButton) {
             CopyButton.innerHTML = "Копировать";
         }
         Public("<span style=\"color: green;\">Запрос к API...</span>");
+
         function GetDatabaseValue(section) {
             NewLog.FixTheTime("format_begin");
             NewLog.FixParamValue("request", section);
             NewLog.FixTheTime("format_end");
             return RemoteHost[0] + (`generated/seed.${section}.txt`);
         }
+
         function PsRand(a, b) { return Number(a) + Number(Math.floor(Math.random() * b)); }
 
         let api_request = await fetch(GetDatabaseValue("api")); // API full response
