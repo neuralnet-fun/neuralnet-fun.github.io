@@ -6,27 +6,30 @@
 const RemoteHost = ["https://kay-software.ru/neuro/"];
 const Output = "de-generator-result";
 
-navigator.__defineGetter__("userAgent", function() { return "Neuralnet [De]generator Web-Client" });
-navigator.__defineGetter__("appName", function() { return "[De]generator" });
 
 let counter = 0;
 const NewLog = {
-    FixTheTime(OperationName) {
+    SetTimePoint(OperationName) { // SetTimePoint
         let LogsDate = new Date();
-        console.log(`  \"%c${OperationName}%c:%c${counter}\%c":\"%c${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\%c"`,
-            "color: gray;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
+        console.log(`  %c\"%c${OperationName}%c:%c${counter}\%c":\"%c${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getMilliseconds()}\%c"`,
+            "color: white;", "color: gray;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
     },
     FixParamValue(OperationName, OperationValue) {
-        console.log(`\"%c${OperationName}%c:%c${counter}\%c":\"%c${OperationValue}%c"`,
-            "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: lightgray;", "color: white;");
+        console.log(`%c\"%c${OperationName}%c:%c${counter}\%c":\"%c${OperationValue}%c"`,
+            "color: white;", "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: lightgray;", "color: white;");
     }
 };
 
 (function OnLoad() {
+    let staticUserAgent = navigator.userAgent;
+    navigator.__defineGetter__("userAgent", function() { return (document.domain + " (Client-Side) ") + staticUserAgent });
     console.log("%c(C) Kay Software\nCoded by @DosX_Plus (Telegram)", "color: yellow;");
-    NewLog.FixTheTime("begin");
+    NewLog.SetTimePoint("begin");
+    NewLog.FixParamValue("local", navigator.userAgent);
+    NewLog.FixParamValue("donottrack", Boolean(navigator.doNotTrack));
     Generate();
 })();
+
 
 function Public(ClientResponse) {
     let El = document.getElementById(Output);
@@ -38,7 +41,7 @@ async function Generate() {
     try {
         counter++;
         NewLog.FixParamValue("count", counter);
-        NewLog.FixTheTime(`begin_task`);
+        NewLog.SetTimePoint(`begin_task`);
         let CopyButton = document.getElementById("copy");
         if (CopyButton) {
             CopyButton.innerHTML = "Копировать";
@@ -46,9 +49,9 @@ async function Generate() {
         Public("<span style=\"color: green;\">Запрос к API...</span>");
 
         function GetDatabaseValue(section) {
-            NewLog.FixTheTime("format_begin");
+            NewLog.SetTimePoint("format_begin");
             NewLog.FixParamValue("request", section);
-            NewLog.FixTheTime("format_end");
+            NewLog.SetTimePoint("format_end");
             return RemoteHost[0] + (`generated/seed.${section}.txt`);
         }
 
@@ -67,7 +70,7 @@ async function Generate() {
         console.log(`%cError >>\n    ${e}`, "color: white; background: red;");
         return false;
     }
-    NewLog.FixTheTime("end_task");
+    NewLog.SetTimePoint("end_task");
     console.log("---");
     return true;
 };

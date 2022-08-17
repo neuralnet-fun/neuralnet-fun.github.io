@@ -153,7 +153,7 @@
         function CopyResult() {
             navigator.clipboard.writeText("[Де]генератор: " + document.getElementById(Output).textContent);
             document.getElementById("copy").innerHTML = "Скопировано!";
-            NewLog.FixTheTime("copied");
+            NewLog.SetTimePoint("copied");
         }
     </script>
 </body>
