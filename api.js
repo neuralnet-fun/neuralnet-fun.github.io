@@ -51,8 +51,9 @@ function GetDatabaseValue(section) { // Форматируем текст для
     // "api" => "https://kay-software.ru/neuro/generated/seed.api.txt"
     NewLog.SetTimePoint("format_begin");
     NewLog.FixParamValue("request", section);
+    let GeneratedResult = RemoteHost[0] + (`generated/seed.${section}.txt`);
     NewLog.SetTimePoint("format_end");
-    return RemoteHost[0] + (`generated/seed.${section}.txt`);
+    return GeneratedResult;
 }
 
 // Псевдо-рандом с "от" и "до", базированный на Math.random()
