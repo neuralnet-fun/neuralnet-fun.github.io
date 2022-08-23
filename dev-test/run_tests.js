@@ -14,9 +14,9 @@ const RemoteHost = ["https://kay-software.ru/neuro/"];
 
 function Log(seed, text) {
     let result = document.createElement("div");
-    result.innerHTML = `[<span style=\"color: lightblue;\">${seed}</span>] ${text}`;
+    result.innerHTML = `[<span style=\"color: pink;\">${md5(text)}</span>][<span style=\"color: lightblue;\">${seed}</span>] \"${text}\"`;
     document.getElementById("console").appendChild(result);
-    if (String(getSelection() != "")) {
+    if (String(getSelection()) == "") {
         window.scrollTo(0, document.body.scrollHeight);
     }
 }
