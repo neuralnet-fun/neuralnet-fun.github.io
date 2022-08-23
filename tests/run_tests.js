@@ -31,7 +31,7 @@ function PsRand(a, b) { return Number(a) + Number(Math.floor(Math.random() * b))
 function DoProcess(e) {
     setInterval(() => {
         NewSeedPhrase(e);
-    }, 500);
+    }, 750);
 }
 
 async function NewSeedPhrase(e) {
