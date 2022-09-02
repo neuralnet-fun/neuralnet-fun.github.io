@@ -3,9 +3,12 @@
     Coded by @DosX_Plus (Telegram)
 */
 
+const AppVer = 2.5;
 const RemoteHost = ["https://kay-software.ru/neuro/"]; // удалённый сервер
 const Output = "de-generator-result"; // id элемента для вывода результата
 const CopyButton = "copy"; // id кнопки "копировать"
+
+let Statistics = [0, 0]; // generated_int, copied_int
 
 let CopyButtonDefaultText;
 let CopyButtonEl = document.getElementById(CopyButton);
@@ -26,6 +29,8 @@ const NewLog = {
     }
 };
 (function OnLoad() {
+    Statistics[0] = Number(localStorage.getItem("generated_int")); // Всего прокликано
+    Statistics[1] = Number(localStorage.getItem("copied_int")); // Всего скопировано
     if (CopyButtonEl) {
         CopyButtonDefaultText = CopyButtonEl.textContent; // Запоминаем текст кнопки копирования результата
     }
@@ -35,6 +40,7 @@ const NewLog = {
     // ---
     console.log("%c(C) Kay Software\nCoded by @DosX_Plus (Telegram)", "color: yellow;");
     NewLog.SetTimePoint("begin");
+    NewLog.FixParamValue("appversion", AppVer);
     NewLog.FixParamValue("local", navigator.userAgent); // Свойство [UserAgent] "Идентификатор клиента"
     NewLog.FixParamValue("donottrack", Boolean(navigator.doNotTrack)); // Свойство [DoNotTrack] "Не отслеживать"
     Generate();
@@ -62,6 +68,12 @@ function PsRand(a, b) { return Number(a) + Number(Math.floor(Math.random() * b))
 async function Generate() {
     try {
         counter++; // +1 к счётчику
+        Statistics[0]++; // +1 к глобальному счётчику
+
+        NewLog.FixParamValue("total_generated", Statistics[0]);
+        NewLog.FixParamValue("total_copied", Statistics[1]);
+
+        localStorage.setItem("generated_int", Statistics[0]);
         NewLog.FixParamValue("count", counter);
         NewLog.SetTimePoint("begin_task");
         if (CopyButtonEl) {
@@ -95,3 +107,10 @@ async function Generate() {
     console.log("---");
     return true;
 };
+
+function Help() { // Функция справки
+    let msg1 = confirm(`[<< ВАША СТАТИСТИКА >>]\n\nСгенерировано фраз: ${Statistics[0]}\nСкопировано: ${Statistics[1]}\n\nПосмотреть информацию о клиентском приложении?`);
+    if (msg1) {
+        alert(`(С) [Де]генератор - degenerator.ml\nВсе полученные результаты - выдумка искусственного интеллекта и не имеют ничего общего с реальностью. Любые совпадения случайны.\n\n———————————\nВерсия клиента: v${AppVer}\n———————————\nПрограммист - @DosX_Plus [Telegram]\nПомощь с JS - @lrmpsm53 [Telegram]\nПомощь с моделью - @krasniy_doshik [Telegram]\n———————————`);
+    }
+}

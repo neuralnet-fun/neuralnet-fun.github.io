@@ -133,8 +133,8 @@
         document.title = "[Де]генератор (WEB)";
     </script>
     <div class="mobile-center ns">
-        <h2>[Де]генератор</h2>
-        <h4 style="margin-top: -20px; font-family: Arial, Helvetica, sans-serif; color:rgb(0, 22, 37);">degenerator.ml</h4>
+        <h2 style="cursor: help;" onclick="Help();">[Де]генератор</h2>
+        <h4 style="margin-top: -20px; font-family: Arial, Helvetica, sans-serif; color:rgb(0, 22, 37); cursor: help;" onclick="Help();">degenerator.ml</h4>
         <button onclick="Generate();" class="button">Ещё!</button>
         <button id="copy" onclick="CopyResult();" class="button-copy">Копировать</button>
         <br class="mobile-link">
@@ -151,8 +151,10 @@
     <script type="text/javascript" id="seed-requester" src="api.js"></script>
     <script>
         function CopyResult() {
-            navigator.clipboard.writeText("[Де]генератор: " + document.getElementById(Output).textContent);
+            navigator.clipboard.writeText("[Де]генератор (de-gen.ml):\n" + document.getElementById(Output).textContent);
             document.getElementById("copy").innerHTML = "Скопировано!";
+            Statistics[1]++; // +1 к глобальному счётчику
+            localStorage.setItem("copied_int", Statistics[1]); // Запоминаем значение
             NewLog.SetTimePoint("copied");
         }
     </script>
