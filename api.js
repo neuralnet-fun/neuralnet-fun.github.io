@@ -3,7 +3,7 @@
     Coded by @DosX_Plus (Telegram)
 */
 
-const AppVer = 2.5;
+const AppVer = 2.6;
 const RemoteHost = ["https://kay-software.ru/neuro/"]; // удалённый сервер
 const Output = "de-generator-result"; // id элемента для вывода результата
 const CopyButton = "copy"; // id кнопки "копировать"
@@ -99,8 +99,8 @@ async function Generate() {
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code)); // Отправляем запрос на получение ответа из базы по сиду и перенаправляем ответ в Public
     } catch (e) {
         let El = document.getElementById(Output);
-        if (El) { El.innerHTML = `<pre><span style=\"color: red;\">Exception occurred:\n   ${e}</span></pre>`; }
-        console.log(`%cError >>\n    ${e}`, "color: white; background: red;");
+        if (El) { El.innerHTML = `<pre style="white-space: pre-wrap;"><span style=\"color: red;\">Exception occurred:\n   ${e}</span></pre>`; }
+        console.error(`%cError >>\n    ${e}`, "color: white; background: red;");
         return false;
     }
     NewLog.SetTimePoint("end_task");
