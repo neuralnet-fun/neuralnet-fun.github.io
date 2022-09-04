@@ -151,10 +151,10 @@
     <script type="text/javascript" id="seed-requester" src="api.js"></script>
     <script>
         function CopyResult() {
-            navigator.clipboard.writeText("[Де]генератор (de-gen.ml):\n" + document.getElementById(Output).textContent);
+            navigator.clipboard.writeText(`[Де]генератор (${Config.RemoteHost[1]}):\n` + document.getElementById(Config.Output).textContent);
             document.getElementById("copy").innerHTML = "Скопировано!";
-            Statistics[1]++; // +1 к глобальному счётчику
-            localStorage.setItem("copied_int", Statistics[1]); // Запоминаем значение
+            StatDB.Copied++; // +1 к глобальному счётчику
+            localStorage.setItem("copied_int", StatDB.Copied); // Запоминаем значение
             NewLog.SetTimePoint("copied");
         }
     </script>

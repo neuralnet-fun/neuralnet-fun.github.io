@@ -1,0 +1,6 @@
+{
+    "Version": 2.6,
+    "RemoteHost": ["https://kay-software.ru/neuro/", "de-gen.ml"],
+    "Output": "de-generator-result",
+    "CopyButton": "copy"
+}

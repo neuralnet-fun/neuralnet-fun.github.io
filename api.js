@@ -3,15 +3,20 @@
     Coded by @DosX_Plus (Telegram)
 */
 
-const AppVer = 2.6;
-const RemoteHost = ["https://kay-software.ru/neuro/"]; // удалённый сервер
-const Output = "de-generator-result"; // id элемента для вывода результата
-const CopyButton = "copy"; // id кнопки "копировать"
+const Config = { // Конфигурация клиентского приложения
+    Version: 2.6,
+    RemoteHost: ["https://kay-software.ru/neuro/", "de-gen.ml", "degenerator.ml"],
+    Output: "de-generator-result",
+    CopyButton: "copy"
+}
 
-let Statistics = [0, 0]; // generated_int, copied_int
+var StatDB = { // Локальная база данных со статистикой юзера (подгружается в OnLoad)
+    Generated: 0,
+    Copied: 0
+}
 
 let CopyButtonDefaultText;
-let CopyButtonEl = document.getElementById(CopyButton);
+let CopyButtonEl = document.getElementById(Config.CopyButton);
 
 let counter = 0; // Счётчик, считающий количество вызванных Generate();
 
@@ -29,8 +34,8 @@ const NewLog = {
     }
 };
 (function OnLoad() {
-    Statistics[0] = Number(localStorage.getItem("generated_int")); // Всего прокликано
-    Statistics[1] = Number(localStorage.getItem("copied_int")); // Всего скопировано
+    StatDB.Generated = Number(localStorage.getItem("generated_int")); // Всего прокликано
+    StatDB.Copied = Number(localStorage.getItem("copied_int")); // Всего скопировано
     if (CopyButtonEl) {
         CopyButtonDefaultText = CopyButtonEl.textContent; // Запоминаем текст кнопки копирования результата
     }
@@ -40,14 +45,14 @@ const NewLog = {
     // ---
     console.log("%c(C) Kay Software\nCoded by @DosX_Plus (Telegram)", "color: yellow;");
     NewLog.SetTimePoint("begin");
-    NewLog.FixParamValue("appversion", AppVer);
+    NewLog.FixParamValue("appversion", Config.Version);
     NewLog.FixParamValue("local", navigator.userAgent); // Свойство [UserAgent] "Идентификатор клиента"
     NewLog.FixParamValue("donottrack", Boolean(navigator.doNotTrack)); // Свойство [DoNotTrack] "Не отслеживать"
     Generate();
 })();
 
 function Public(ClientResponse) { // Экранирование результата в текстовом виде
-    let El = document.getElementById(Output);
+    let El = document.getElementById(Config.Output);
     if (El) { El.innerHTML = ClientResponse; }
     if (!ClientResponse.includes("span")) { NewLog.FixParamValue("response", ClientResponse) }
     return true;
@@ -57,7 +62,7 @@ function GetDatabaseValue(section) { // Форматируем текст для
     // "api" => "https://kay-software.ru/neuro/generated/seed.api.txt"
     NewLog.SetTimePoint("format_begin");
     NewLog.FixParamValue("request", section);
-    let GeneratedResult = RemoteHost[0] + (`generated/seed.${section}.txt`);
+    let GeneratedResult = Config.RemoteHost[0] + (`generated/seed.${section}.txt`);
     NewLog.SetTimePoint("format_end");
     return GeneratedResult;
 }
@@ -68,12 +73,12 @@ function PsRand(a, b) { return Number(a) + Number(Math.floor(Math.random() * b))
 async function Generate() {
     try {
         counter++; // +1 к счётчику
-        Statistics[0]++; // +1 к глобальному счётчику
+        StatDB.Generated++; // +1 к глобальному счётчику
 
-        NewLog.FixParamValue("total_generated", Statistics[0]);
-        NewLog.FixParamValue("total_copied", Statistics[1]);
+        NewLog.FixParamValue("total_generated", StatDB.Generated);
+        NewLog.FixParamValue("total_copied", StatDB.Copied);
 
-        localStorage.setItem("generated_int", Statistics[0]);
+        localStorage.setItem("generated_int", StatDB.Generated);
         NewLog.FixParamValue("count", counter);
         NewLog.SetTimePoint("begin_task");
         if (CopyButtonEl) {
@@ -98,7 +103,7 @@ async function Generate() {
 
         await fetch(GetDatabaseValue(seed)).then(response => response.text()).then(code => Public(code)); // Отправляем запрос на получение ответа из базы по сиду и перенаправляем ответ в Public
     } catch (e) {
-        let El = document.getElementById(Output);
+        let El = document.getElementById(Config.Output);
         if (El) { El.innerHTML = `<pre style="white-space: pre-wrap;"><span style=\"color: red;\">Exception occurred:\n   ${e}</span></pre>`; }
         console.error(`%cError >>\n    ${e}`, "color: white; background: red;");
         return false;
@@ -109,8 +114,29 @@ async function Generate() {
 };
 
 function Help() { // Функция справки
-    let msg1 = confirm(`[<< ВАША СТАТИСТИКА >>]\n\nСгенерировано фраз: ${Statistics[0]}\nСкопировано: ${Statistics[1]}\n\nПосмотреть информацию о клиентском приложении?`);
+    let msg1 = confirm(`[<< ВАША СТАТИСТИКА >>]\n\nСгенерировано фраз: ${StatDB.Generated}\nСкопировано: ${StatDB.Copied}\n\nПосмотреть информацию о клиентском приложении?`);
     if (msg1) {
-        alert(`(С) [Де]генератор - degenerator.ml\nВсе полученные результаты - выдумка искусственного интеллекта и не имеют ничего общего с реальностью. Любые совпадения случайны.\n\n———————————\nВерсия клиента: v${AppVer}\n———————————\nПрограммист - @DosX_Plus [Telegram]\nПомощь с JS - @lrmpsm53 [Telegram]\nПомощь с моделью - @krasniy_doshik [Telegram]\n———————————`);
+        alert(`(С) [Де]генератор - degenerator.ml\nВсе полученные результаты - выдумка искусственного интеллекта и не имеют ничего общего с реальностью. Любые совпадения случайны.\n\n———————————\nВерсия клиента: v${Config.Version}\n———————————\nПрограммист - @DosX_Plus [Telegram]\nПомощь с JS - @lrmpsm53 [Telegram]\nПомощь с моделью - @krasniy_doshik [Telegram]\n———————————`);
     }
 }
+
+function openInNewTab(href) { // Открытие ссылок в новых вкладках
+    Object.assign(document.createElement('a'), {
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        href: href,
+    }).click();
+}
+
+// В случае использования клиентской версии приложения на сервере, не имеющим указанный домен - появляется сообщение с предлогом посетить оригинальную страницу.
+(function AnotherHosting(defaultDomain) {
+    if (document.domain !== defaultDomain && document.domain !== "") {
+        if (!localStorage.getItem("another_domain_message")) {
+            let question = confirm(`Вы перешли на страницу модифицированной версии [Де]генератора: https://${Config.RemoteHost[2]}/\n\nНе желаете ли посетить официальную версию клиента?`);
+            if (question) {
+                openInNewTab(`https://${Config.RemoteHost[2]}`);
+            }
+            localStorage.setItem("another_domain_message", true);
+        }
+    }
+})(Config.RemoteHost[2]);
