@@ -4,7 +4,7 @@
 */
 
 const Config = { // Конфигурация клиентского приложения
-    Version: 2.6,
+    Version: 2.7,
     RemoteHost: ["https://kay-software.ru/neuro/", "de-gen.ml", "degenerator.ml"],
     Output: "de-generator-result",
     CopyButton: "copy"
@@ -15,21 +15,24 @@ var StatDB = { // Локальная база данных со статисти
     Copied: 0
 }
 
+var __StatDB = { // Временная БД для учёта последней активности
+    Generated: 0,
+    Copied: 0
+}
+
 let CopyButtonDefaultText;
 let CopyButtonEl = document.getElementById(Config.CopyButton);
 
-let counter = 0; // Счётчик, считающий количество вызванных Generate();
-
 const NewLog = {
     SetTimePoint(OperationName) { // Временная метка (измеряем производительность и начало каждой базовой операции)
-        // "OperationName:counter":"Hours:Minutes:Seconds,Milliseconds"
+        // "OperationName:__StatDB.Generated":"Hours:Minutes:Seconds,Milliseconds"
         let LogsDate = new Date();
-        console.log(`  %c\"%c${OperationName}%c:%c${counter}\%c":\"%c${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getSeconds()},${LogsDate.getMilliseconds()}\%c"`,
+        console.log(`  %c\"%c${OperationName}%c:%c${__StatDB.Generated}\%c":\"%c${LogsDate.getHours()}:${LogsDate.getMinutes()}:${LogsDate.getSeconds()},${LogsDate.getMilliseconds()}\%c"`,
             "color: white;", "color: gray;", "color: white;", "color: lightblue;", "color: white;", "color: gray;", "color: white;");
     },
     FixParamValue(OperationName, OperationValue) { // Фиксируем значения окружения
-        // "OperationName:counter":"OperationValue"
-        console.log(`%c\"%c${OperationName}%c:%c${counter}\%c":\"%c${OperationValue}%c"`,
+        // "OperationName:__StatDB.Generated":"OperationValue"
+        console.log(`%c\"%c${OperationName}%c:%c${__StatDB.Generated}\%c":\"%c${OperationValue}%c"`,
             "color: white;", "color: #fffdd0;", "color: white;", "color: lightblue;", "color: white;", "color: lightgray;", "color: white;");
     }
 };
@@ -72,14 +75,14 @@ function PsRand(a, b) { return Number(a) + Number(Math.floor(Math.random() * b))
 
 async function Generate() {
     try {
-        counter++; // +1 к счётчику
+        __StatDB.Generated++; // +1 к счётчику
         StatDB.Generated++; // +1 к глобальному счётчику
 
         NewLog.FixParamValue("total_generated", StatDB.Generated);
         NewLog.FixParamValue("total_copied", StatDB.Copied);
 
         localStorage.setItem("generated_int", StatDB.Generated);
-        NewLog.FixParamValue("count", counter);
+        NewLog.FixParamValue("count", __StatDB.Generated);
         NewLog.SetTimePoint("begin_task");
         if (CopyButtonEl) {
             CopyButtonEl.innerHTML = CopyButtonDefaultText; // Восстанавливаем текст, который был в кнопке изначально
@@ -114,9 +117,9 @@ async function Generate() {
 };
 
 function Help() { // Функция справки
-    let msg1 = confirm(`[<< ВАША СТАТИСТИКА >>]\n\nСгенерировано фраз: ${StatDB.Generated}\nСкопировано: ${StatDB.Copied}\n\nПосмотреть информацию о клиентском приложении?`);
+    let msg1 = confirm(`◉ ГЛОБАЛЬНАЯ СТАТИСТИКА\n ○ Сгенерировано фраз: ${StatDB.Generated}\n ○ Скопировано: ${StatDB.Copied}\n\n◉ ПОСЛЕДНЯЯ АКТИВНОСТЬ\n ○ Сгенерировано фраз: ${__StatDB.Generated}\n ○ Скопировано: ${__StatDB.Copied}\n\nОткрыть информацию о версии?`);
     if (msg1) {
-        alert(`(С) [Де]генератор - degenerator.ml\nВсе полученные результаты - выдумка искусственного интеллекта и не имеют ничего общего с реальностью. Любые совпадения случайны.\n\n———————————\nВерсия клиента: v${Config.Version}\n———————————\nПрограммист - @DosX_Plus [Telegram]\nПомощь с JS - @lrmpsm53 [Telegram]\nПомощь с моделью - @krasniy_doshik [Telegram]\n———————————`);
+        alert(`(С) [Де]генератор - degenerator.ml\nВсе полученные результаты - выдумка искусственного интеллекта и не имеют ничего общего с реальностью. Любые совпадения случайны.\n\nВерсия клиента: v${Config.Version}\n———————————\nПрограммист - @DosX_Plus [Telegram]\nПомощь с JS - @lrmpsm53 [Telegram]\nПомощь с моделью - @krasniy_doshik [Telegram]\nХороший донатер - @horsicq [Telegram]\n———————————`);
     }
 }
 

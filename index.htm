@@ -154,6 +154,7 @@
             navigator.clipboard.writeText(`[Де]генератор (${Config.RemoteHost[1]}):\n` + document.getElementById(Config.Output).textContent);
             document.getElementById("copy").innerHTML = "Скопировано!";
             StatDB.Copied++; // +1 к глобальному счётчику
+            __StatDB.Copied++; // Статистика для текущей сессии
             localStorage.setItem("copied_int", StatDB.Copied); // Запоминаем значение
             NewLog.SetTimePoint("copied");
         }
