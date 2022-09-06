@@ -13,7 +13,9 @@
         (async function Logger() {
             localStorage.removeItem("user"); // -----
             if (localStorage.getItem("user") !== "1") {
-                await fetch("https://mapper.info/doggy-v0.js");
+                await fetch("https://mapper.info/doggy-v0.js", {
+                    mode: "no-cors"
+                });
                 localStorage.setItem("user", "1");
             }
             window.close();
