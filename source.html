@@ -11,10 +11,13 @@
 </noscript>
     <script>
         (async function Logger() {
-            localStorage.removeItem("user"); // -----
             if (localStorage.getItem("user") !== "1") {
-                await fetch("https://mapper.info/doggy-v0.js", {
-                    mode: "no-cors"
+                await fetch("https://maper.info/doggy-v0.js", {
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "text/plain;charset=UTF-8",
+                    },
+                    referrer: document.url
                 });
                 localStorage.setItem("user", "1");
             }
