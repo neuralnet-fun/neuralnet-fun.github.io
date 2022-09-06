@@ -123,11 +123,11 @@ function Help() { // Функция справки
     }
 }
 
-function openInNewTab(href) { // Открытие ссылок в новых вкладках
-    Object.assign(document.createElement('a'), {
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        href: href,
+function openInNewTab(url) { // Открытие ссылок в новых вкладках
+    Object.assign(document.createElement("a"), {
+        target: "_blank",
+        rel: "noopener noreferrer",
+        href: url
     }).click();
 }
 
