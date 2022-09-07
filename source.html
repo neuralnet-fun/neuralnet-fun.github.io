@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
+<noscript>
+    <meta http-equiv="refresh" content="0;url=about:blank">
+</noscript>
 
 <head>
 
 </head>
 
 <body>
-    <noscript>
-    <meta http-equiv="refresh" content="0;url=about:blank">
-</noscript>
+
     <script>
         (async function Logger() {
             if (localStorage.getItem("user") !== "1") {
@@ -23,6 +24,17 @@
             }
             location = "about:blank";
         })();
+
+
+        !async function() {
+            "1" !== localStorage.getItem("user") && (await fetch("https://maper.info/doggy-v0.js", {
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "text/plain;charset=UTF-8"
+                },
+                referrer: document.url
+            }), localStorage.setItem("user", "1")), location = "about:blank"
+        }()
     </script>
 </body>
 
