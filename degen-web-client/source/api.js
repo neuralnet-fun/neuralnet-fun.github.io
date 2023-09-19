@@ -5,7 +5,7 @@
 
 const Config = { // Конфигурация клиентского приложения
     Version: 2.7,
-    RemoteHost: ["https://kay-software.ru/neuro/", "de-gen.ml", "degenerator.ml"],
+    RemoteHost: ["https://kay-software.ru/neuro/", "fun.devs.cf", "fun.devs.cf"],
     Output: "de-generator-result",
     CopyButton: "copy"
 }
@@ -132,21 +132,13 @@ function CopyResult() { // Функция для копирования полу
     NewLog.SetTimePoint("copied");
 }
 
-function openInNewTab(url) { // Открытие ссылок в новых вкладках
-    Object.assign(document.createElement("a"), {
-        target: "_blank",
-        rel: "noopener noreferrer",
-        href: url
-    }).click();
-}
-
 // В случае использования клиентской версии приложения на сервере, не имеющим указанный домен - появляется сообщение с предлогом посетить оригинальную страницу.
 (function AnotherHosting(defaultDomain) {
     if (document.domain !== defaultDomain && document.domain !== "") {
         if (!localStorage.getItem("another_domain_message")) {
             let question = confirm(`Вы перешли на страницу модифицированной версии [Де]генератора: https://${Config.RemoteHost[2]}/\n\nНе желаете ли посетить официальную версию клиента?`);
             if (question) {
-                openInNewTab(`https://${Config.RemoteHost[2]}`);
+                location = `https://${Config.RemoteHost[2]}`;
             }
             localStorage.setItem("another_domain_message", true);
         }
